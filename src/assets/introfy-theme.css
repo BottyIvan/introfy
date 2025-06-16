@@ -1,0 +1,191 @@
+:root {
+    /* Primary Palette */
+    --color-primary: #2D9CDB;
+    --color-secondary: #56CCF2;
+    --color-accent: #F2994A;
+
+    /* Status Colors */
+    --color-success: #27ae60;
+    --color-warning: #f2c94c;
+    --color-error: #eb5757;
+    --color-info: #2f80ed;
+
+    /* Backgrounds & Surfaces */
+    --color-bg: #F7F7F7;
+    --color-surface: #FFFFFF;
+    --color-card: #FFFFFF;
+    --color-card-alt: #F3F4F6;
+
+    /* Borders & Shadows */
+    --color-border: #E5E7EB;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+
+    /* Text */
+    --color-text-main: #111827;
+    --color-text-secondary: #374151;
+    --color-text-muted: #6B7280;
+    --color-text-light: #9CA3AF;
+}
+
+[data-theme="dark"] {
+    --color-primary: #2D9CDB;
+    --color-secondary: #56CCF2;
+    --color-accent: #F2994A;
+
+    --color-success: #27ae60;
+    --color-warning: #f2c94c;
+    --color-error: #eb5757;
+    --color-info: #2f80ed;
+
+    --color-bg: #111827;
+    --color-surface: #181A1B;
+    --color-card: #101624;
+    --color-card-alt: #181e2f;
+
+    --color-border: #1F2937;
+
+    --color-text-main: #FFFFFF;
+    --color-text-secondary: #D1D5DB;
+    --color-text-muted: #9CA3AF;
+    --color-text-light: #F3F4F6;
+}
+
+/* Utility Classes */
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+
+.bg-accent {
+    background-color: var(--color-accent);
+}
+
+.bg-success {
+    background-color: var(--color-success);
+}
+
+.bg-warning {
+    background-color: var(--color-warning);
+}
+
+.bg-error {
+    background-color: var(--color-error);
+}
+
+.bg-info {
+    background-color: var(--color-info);
+}
+
+.bg-bg {
+    background-color: var(--color-bg);
+}
+
+.bg-surface {
+    background-color: var(--color-surface);
+}
+
+.bg-card {
+    background-color: var(--color-card);
+}
+
+.bg-card-alt {
+    background-color: var(--color-card-alt);
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-secondary {
+    color: var(--color-secondary);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.text-success {
+    color: var(--color-success);
+}
+
+.text-warning {
+    color: var(--color-warning);
+}
+
+.text-error {
+    color: var(--color-error);
+}
+
+.text-info {
+    color: var(--color-info);
+}
+
+.text-main {
+    color: var(--color-text-main);
+}
+
+.text-secondary-main {
+    color: var(--color-text-secondary);
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.text-light {
+    color: var(--color-text-light);
+}
+
+.border-primary {
+    border-color: var(--color-primary);
+}
+
+.border-secondary {
+    border-color: var(--color-secondary);
+}
+
+.border-accent {
+    border-color: var(--color-accent);
+}
+
+.border-success {
+    border-color: var(--color-success);
+}
+
+.border-warning {
+    border-color: var(--color-warning);
+}
+
+.border-error {
+    border-color: var(--color-error);
+}
+
+.border-info {
+    border-color: var(--color-info);
+}
+
+.border-bg {
+    border-color: var(--color-bg);
+}
+
+.border-surface {
+    border-color: var(--color-surface);
+}
+
+.border-card {
+    border-color: var(--color-card);
+}
+
+.border-card-alt {
+    border-color: var(--color-card-alt);
+}
+
+.border-main {
+    border-color: var(--color-border);
+}

@@ -1,0 +1,29 @@
+{
+  "name": "introfy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "bootstrap-icons": "^1.13.1",
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "marked": "^15.0.12",
+    "pinia": "^3.0.3",
+    "tailwindcss": "^4.1.10",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "vite": "^6.2.4",
+    "vite-plugin-markdown": "^2.2.0",
+    "vite-plugin-vue-devtools": "^7.7.2"
+  }
+}
