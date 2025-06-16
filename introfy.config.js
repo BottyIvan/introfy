@@ -18,7 +18,7 @@ export default {
         description: APP_DESCRIPTION,
         github: {
             username: "BottyIvan",
-            repository: "brewhub"
+            repository: "introfy"
         },
         files: {
             releases: "releases.json",
