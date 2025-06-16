@@ -1,5 +1,11 @@
 # Introfy.dev
 
+> [!CAUTION]
+> Some features of Introfy are still under development and may not be fully functional. Stay tuned for updates!
+
+> [!NOTE]
+> A CLI tool for project scaffolding is planned for future releases.
+
 **Introfy.dev** is a modern, open source landing page generator designed for software projects, teams, and developers who want to showcase their work professionally, quickly, and with SEO optimization.
 
 ## Main Features
@@ -69,7 +75,3 @@ Open an issue or pull request on [GitHub](https://github.com/your-username/brewh
 ## License
 
 This project is licensed under the [MIT](LICENSE) license.
-
----
-
-**Introfy.dev** — Create modern landing pages for your open source projects in minutes.
