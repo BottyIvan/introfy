@@ -16,7 +16,7 @@ defineProps({
     <div class="flex flex-col gap-12">
         <div v-for="(main, idx) in mainFeatures" :key="main.title"
             class="bg-[#101624] border border-gray-800 rounded-2xl shadow-lg p-6 mb-6 text-left flex flex-col md:flex-row items-center md:items-stretch overflow-hidden">
-            <!-- Testo -->
+            <!-- Text -->
             <div class="flex-1 p-8 flex flex-col justify-center items-start text-left">
                 <h3 class="text-2xl font-bold text-gray-100 mb-4">{{ main.title }}</h3>
                 <p class="text-gray-300 mb-4">{{ main.description }}</p>
@@ -26,7 +26,7 @@ defineProps({
                     {{ main.linkText || 'Learn more' }}
                 </a>
             </div>
-            <!-- Immagine/mockup -->
+            <!-- Image/mockup -->
             <div class="flex-1 flex justify-center items-center relative min-h-[300px]">
                 <div
                     class="absolute inset-0 blur-3xl opacity-60 bg-gradient-to-br from-blue-700 via-blue-500 to-transparent z-0">
