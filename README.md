@@ -4,7 +4,9 @@
 > Some features of Introfy are still under development and may not be fully functional. Stay tuned for updates!
 
 > [!NOTE]
-> A CLI tool for project scaffolding is planned for future releases.
+> 🚀 **Introfy CLI is now available!**  
+> Easily scaffold new landing pages and manage your project from the command line.  
+> Learn more in the [create-introfy repository](https://github.com/BottyIvan/create-introfy).
 
 **Introfy.dev** is a modern, open source landing page generator designed for software projects, teams, and developers who want to showcase their work professionally, quickly, and with SEO optimization.
 
