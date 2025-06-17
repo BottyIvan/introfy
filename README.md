@@ -44,7 +44,7 @@
 
    ```bash
    git clone https://github.com/BottyIvan/introfy.git
-   cd brewhub-landing
+   cd introfy
    ```
 
 2. **Install dependencies**
@@ -70,7 +70,7 @@ You can deploy to any platform that supports static sites, such as [Vercel](http
 ## Contributing
 
 Contributions, bug reports, and suggestions are welcome!  
-Open an issue or pull request on [GitHub](https://github.com/your-username/brewhub-landing).
+Open an issue or pull request on [GitHub](https://github.com/your-username/introfy).
 
 ## License
 
