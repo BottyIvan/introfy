@@ -1,8 +1,11 @@
 <script setup>
+import { ref } from 'vue'
 import introfyConfig from '../../introfy.config'
 
 const appName = introfyConfig?.app?.name || 'Introfy'
 const icon = introfyConfig?.theme?.logo || './favicon.ico'
+
+const menuOpenState = ref(false)
 
 defineProps({
     menubar: {
@@ -17,23 +20,32 @@ defineProps({
 </script>
 <template>
     <header class="bg-gray-900">
-        <div class="max-w-7xl mx-auto text-white p-4 flex items-center justify-between font-sans">
+        <div
+            class="max-w-7xl mx-auto text-white p-4 flex items-center justify-between font-sans flex-wrap md:flex-nowrap">
             <!-- Logo and app name -->
-            <RouterLink to="/" class="flex items-center gap-3 min-w-max hover:opacity-80">
+            <RouterLink to="/" class="flex items-center gap-3 min-w-max hover:opacity-80 mb-3 md:mb-0">
                 <img :src="icon" alt="App Logo" width="32" class="rounded" />
                 <span class="text-xl font-bold">{{ appName }}</span>
             </RouterLink>
+            <!-- Hamburger menu for mobile -->
+            <button class="md:hidden ml-auto text-2xl p-2 rounded hover:bg-gray-700"
+                @click="menuOpenState = !menuOpenState" aria-label="Toggle menu">
+                <i :class="menuOpenState ? 'bi bi-x-lg' : 'bi bi-list'"></i>
+            </button>
             <!-- Navigation -->
-            <nav class="flex-1 ml-8">
+            <nav class="w-full md:w-auto md:flex-1 md:ml-8"
+                :class="{ 'block': menuOpenState, 'hidden': !menuOpenState, 'md:block': true }">
                 <Transition name="fade-slide-menu" mode="out-in">
-                    <ul class="flex gap-6" v-if="menubar && menubar.length" :key="JSON.stringify(menubar)">
+                    <ul class="flex flex-col md:flex-row gap-4 md:gap-6 mt-3 md:mt-0" v-if="menubar && menubar.length"
+                        :key="JSON.stringify(menubar)">
                         <li v-for="item in menubar" :key="item.title">
-                            <RouterLink v-if="!item.link" :to="item.path" class="hover:text-blue-400 transition-colors"
+                            <RouterLink v-if="!item.link" :to="item.path"
+                                class="hover:text-blue-400 transition-colors truncate"
                                 :class="{ 'text-blue-400': $route.path === item.path }">
                                 {{ item.title }}
                             </RouterLink>
                             <a v-else :href="item.link" :target="item.link.startsWith('http') ? '_blank' : '_self'"
-                                rel="noopener" class="hover:text-blue-400 transition-colors">
+                                rel="noopener" class="hover:text-blue-400 transition-colors truncate">
                                 {{ item.title }}
                             </a>
                         </li>
@@ -41,11 +53,11 @@ defineProps({
                 </Transition>
             </nav>
             <!-- Search and Download -->
-            <div class="flex items-center gap-3 min-w-max">
+            <div class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-end">
                 <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
                     <i class="bi bi-moon-fill text-xl"></i>
                 </button>
-                <input type="text" placeholder="Search Docs"
+                <input v-if="search" type="text" placeholder="Search Docs"
                     class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                     style="width: 140px;" />
                 <a href="#download"
