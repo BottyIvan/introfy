@@ -83,7 +83,7 @@ export default {
         }
     ],
     theme: {
-        logo: "../assets/icon-512-maskable.png",
+        logo: "./public/icon-512-maskable.png",
         nav: [
             { title: "Features", link: "#features" },
             { title: "Main Features", link: "#main-features" },

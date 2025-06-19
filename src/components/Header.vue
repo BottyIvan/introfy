@@ -2,7 +2,8 @@
 import introfyConfig from '../../introfy.config'
 
 const appName = introfyConfig?.app?.name || 'Introfy'
-const icon = introfyConfig?.theme?.logo || '../assets/icon-512-maskable.png'
+const icon = introfyConfig?.theme?.logo || './favicon.ico'
+
 defineProps({
     menubar: {
         type: Array,
