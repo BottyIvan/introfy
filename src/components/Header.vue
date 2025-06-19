@@ -35,32 +35,35 @@ defineProps({
             <!-- Navigation -->
             <nav class="w-full md:w-auto md:flex-1 md:ml-8"
                 :class="{ 'block': menuOpenState, 'hidden': !menuOpenState, 'md:block': true }">
-                <Transition name="fade-slide-menu" mode="out-in">
-                    <ul class="flex flex-col md:flex-row gap-4 md:gap-6 mt-3 md:mt-0" v-if="menubar && menubar.length"
-                        :key="JSON.stringify(menubar)">
-                        <li v-for="item in menubar" :key="item.title">
-                            <RouterLink v-if="!item.link" :to="item.path"
-                                class="hover:text-blue-400 transition-colors truncate"
-                                :class="{ 'text-blue-400': $route.path === item.path }">
-                                {{ item.title }}
-                            </RouterLink>
-                            <a v-else :href="item.link" :target="item.link.startsWith('http') ? '_blank' : '_self'"
-                                rel="noopener" class="hover:text-blue-400 transition-colors truncate">
-                                {{ item.title }}
-                            </a>
-                        </li>
-                    </ul>
-                </Transition>
-                <!-- Search and Download -->
-                <div class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-end">
-                    <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
-                        <i class="bi bi-moon-fill text-xl"></i>
-                    </button>
-                    <input v-if="search" type="text" placeholder="Search Docs"
-                        class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                        style="width: 140px;" />
-                    <a href="#download"
-                        class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">Download</a>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                    <Transition name="fade-slide-menu" mode="out-in">
+                        <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
+                            v-if="menubar && menubar.length" :key="JSON.stringify(menubar)">
+                            <li v-for="item in menubar" :key="item.title">
+                                <RouterLink v-if="!item.link" :to="item.path"
+                                    class="hover:text-blue-400 transition-colors truncate"
+                                    :class="{ 'text-blue-400': $route.path === item.path }">
+                                    {{ item.title }}
+                                </RouterLink>
+                                <a v-else :href="item.link" :target="item.link.startsWith('http') ? '_blank' : '_self'"
+                                    rel="noopener" class="hover:text-blue-400 transition-colors truncate">
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        </ul>
+                    </Transition>
+                    <!-- Search and Download -->
+                    <div
+                        class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                        <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
+                            <i class="bi bi-moon-fill text-xl"></i>
+                        </button>
+                        <input v-if="search" type="text" placeholder="Search Docs"
+                            class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+                            style="width: 140px;" />
+                        <a href="#download"
+                            class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">Download</a>
+                    </div>
                 </div>
             </nav>
         </div>
