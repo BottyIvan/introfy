@@ -25,8 +25,8 @@ defineProps({
             </RouterLink>
             <!-- Navigation -->
             <nav class="flex-1 ml-8">
-                <Transition name="fade-slide" mode="out-in">
-                    <ul class="flex gap-6" v-if="menubar && menubar.length">
+                <Transition name="fade-slide-menu" mode="out-in">
+                    <ul class="flex gap-6" v-if="menubar && menubar.length" :key="JSON.stringify(menubar)">
                         <li v-for="item in menubar" :key="item.title">
                             <RouterLink v-if="!item.link" :to="item.path" class="hover:text-blue-400 transition-colors">
                                 {{ item.title }}
@@ -53,3 +53,22 @@ defineProps({
         </div>
     </header>
 </template>
+
+<style scoped>
+.fade-slide-menu-enter-active,
+.fade-slide-menu-leave-active {
+    transition: all 0.3s ease;
+}
+
+.fade-slide-menu-enter-from,
+.fade-slide-menu-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.fade-slide-menu-enter-to,
+.fade-slide-menu-leave-from {
+    opacity: 1;
+    transform: translateX(0);
+}
+</style>
