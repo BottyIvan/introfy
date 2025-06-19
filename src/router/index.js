@@ -7,9 +7,11 @@ const pages = import.meta.glob('../pages/**/*.md')
 
 // Create routes for Markdown files
 const markdownRoutes = Object.keys(pages).map(path => {
+
     // path example: '../pages/documentation.md'
     const match = /\/pages\/(.*)\.md$/.exec(path)
     const name = match ? match[1] : ''
+
     return {
         path: `/${name}`,
         component: Markdown,
@@ -29,6 +31,7 @@ const routes = [
 ]
 
 const router = createRouter({
+
     history: createWebHistory(),
     routes
 })
