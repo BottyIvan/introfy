@@ -34,19 +34,22 @@ defineProps({
             </button>
             <!-- Navigation -->
             <nav class="w-full md:w-auto md:flex-1 md:ml-8"
-                :class="{ 'block': menuOpenState, 'hidden': !menuOpenState, 'md:block': true }">
+                :class="{ 'block': menuOpenState, 'hidden': !menuOpenState, 'md:block': true }"
+                aria-label="Main Navigation">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                     <Transition name="fade-slide-menu" mode="out-in">
                         <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
-                            v-if="menubar && menubar.length" :key="JSON.stringify(menubar)">
+                            v-if="menubar && menubar.length" :key="JSON.stringify(menubar)" aria-label="Menu Items">
                             <li v-for="item in menubar" :key="item.title">
                                 <RouterLink v-if="!item.link" :to="item.path"
                                     class="hover:text-blue-400 transition-colors truncate"
-                                    :class="{ 'text-blue-400': $route.path === item.path }">
+                                    :class="{ 'text-blue-400': $route.path === item.path }"
+                                    aria-label="{{ item.title }}">
                                     {{ item.title }}
                                 </RouterLink>
                                 <a v-else :href="item.link" :target="item.link.startsWith('http') ? '_blank' : '_self'"
-                                    rel="noopener" class="hover:text-blue-400 transition-colors truncate">
+                                    rel="noopener" class="hover:text-blue-400 transition-colors truncate"
+                                    aria-label="{{ item.title }}">
                                     {{ item.title }}
                                 </a>
                             </li>
