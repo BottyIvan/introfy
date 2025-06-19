@@ -51,18 +51,18 @@ defineProps({
                         </li>
                     </ul>
                 </Transition>
+                <!-- Search and Download -->
+                <div class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-end">
+                    <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
+                        <i class="bi bi-moon-fill text-xl"></i>
+                    </button>
+                    <input v-if="search" type="text" placeholder="Search Docs"
+                        class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+                        style="width: 140px;" />
+                    <a href="#download"
+                        class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">Download</a>
+                </div>
             </nav>
-            <!-- Search and Download -->
-            <div class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-end">
-                <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
-                    <i class="bi bi-moon-fill text-xl"></i>
-                </button>
-                <input v-if="search" type="text" placeholder="Search Docs"
-                    class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                    style="width: 140px;" />
-                <a href="#download"
-                    class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">Download</a>
-            </div>
         </div>
     </header>
 </template>
