@@ -28,6 +28,14 @@ const buildGithubApiUrl = (template) => {
 
 onMounted(async () => {
     const response = await fetch(buildGithubApiUrl('https://api.github.com/repos/{user}/{repo}/releases/latest'))
+
+    // Check if the response is ok (status code 200-299)
+    if (!response.ok) {
+        console.error('Failed to fetch the latest release:', response.statusText);
+        return;
+    }
+
+    // Parse the JSON response
     const data = await response.json()
 
     // If you have multiple assets, you can filter the correct one, e.g., by OS.
@@ -37,11 +45,13 @@ onMounted(async () => {
         console.error('No suitable asset found in the latest release.');
         return;
     }
+
     // Set the download URL and asset name
     if (!asset.browser_download_url) {
         console.error('No download URL found for the asset.');
         return;
     }
+
     if (!asset.name) {
         console.error('No asset name found.');
         return;
