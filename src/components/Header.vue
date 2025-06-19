@@ -28,7 +28,8 @@ defineProps({
                 <Transition name="fade-slide-menu" mode="out-in">
                     <ul class="flex gap-6" v-if="menubar && menubar.length" :key="JSON.stringify(menubar)">
                         <li v-for="item in menubar" :key="item.title">
-                            <RouterLink v-if="!item.link" :to="item.path" class="hover:text-blue-400 transition-colors">
+                            <RouterLink v-if="!item.link" :to="item.path" class="hover:text-blue-400 transition-colors"
+                                :class="{ 'text-blue-400': $route.path === item.path }">
                                 {{ item.title }}
                             </RouterLink>
                             <a v-else :href="item.link" :target="item.link.startsWith('http') ? '_blank' : '_self'"
