@@ -1,0 +1,50 @@
+name: "🚀 Publish to GitHub Pages"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    name: "🚀 Publish"
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: "🛎️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🏗️ Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: "🔐 Set environment variables"
+        env:
+          VITE_APP_SEO_DESCRIPTION: ${{ vars.VITE_APP_SEO_DESCRIPTION }}
+          VITE_APP_SEO_KEYWORDS: ${{ vars.VITE_APP_SEO_KEYWORDS }}
+          VITE_APP_NAME: ${{ vars.VITE_APP_NAME }}
+          VITE_APP_URL: ${{ vars.VITE_APP_URL }}
+          VITE_APP_OG_IMAGE: ${{ vars.VITE_APP_OG_IMAGE }}
+        run: |
+          echo "✅ Environment variables set successfully."
+
+      - name: "📦 Install dependencies"
+        run: npm ci
+
+      - name: "🛠️ Run build"
+        run: npm run build
+
+      - name: "🔍 Check build output"
+        run: ls -la dist
+
+      - name: "⬆️ Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
