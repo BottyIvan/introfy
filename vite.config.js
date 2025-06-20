@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     vue({
-      include: [/\.vue$/, /\.md$/] // Include .vue and .md files
+      include: [/\.vue$/] // Include .vue files for processing
     }),
     vueDevTools()
   ],
