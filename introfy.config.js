@@ -1,16 +1,5 @@
 const APP_NAME = "introfy.dev";
 const APP_DESCRIPTION = "Introfy.dev is a tool designed to help developers quickly and easily create beautiful and effective landing pages for their open source projects.";
-const SEO = {
-    title: "Introfy.dev - Create effective landing pages for your open source projects",
-    description: APP_DESCRIPTION,
-    keywords: [
-        "landing page",
-        "open source",
-        "project showcase",
-        "developer tools",
-        "web development"
-    ]
-};
 
 export default {
     app: {
@@ -25,7 +14,6 @@ export default {
         },
         recentDays: 7
     },
-    seo: SEO,
     branding: {
         title: "Introfy",
         tagline: "You think about your project.\nWe think about the landing page."
