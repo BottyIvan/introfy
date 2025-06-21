@@ -5,10 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import vitePluginCopyMarkdownPages from './plugins/markdown-pages.js'
+import introfyConfig from './introfy.config.js'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/introfy/',
+  base: `/${introfyConfig?.app?.github?.repository}/`,
   plugins: [
     tailwindcss(),
     vue({
