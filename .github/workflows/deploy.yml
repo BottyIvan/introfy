@@ -14,7 +14,9 @@ jobs:
   publish:
     name: "🚀 Publish"
     runs-on: ubuntu-latest
-    environment: development
+    environment:
+      name: development
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: "🛎️ Checkout repository"
@@ -23,7 +25,8 @@ jobs:
       - name: "🏗️ Setup Node.js"
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: lts/*
+          cache: "npm"
           registry-url: "https://registry.npmjs.org/"
 
       - name: "📦 Install dependencies"
@@ -40,6 +43,9 @@ jobs:
 
       - name: "🔍 Check build output"
         run: ls -la dist
+
+      - name: "⚙️ Setup Pages"
+        uses: actions/configure-pages@v5
 
       - name: "⬆️ Upload artifact"
         uses: actions/upload-pages-artifact@v3
