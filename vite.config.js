@@ -8,6 +8,7 @@ import vitePluginCopyMarkdownPages from './plugins/markdown-pages.js'
 
 // https://vite.dev/config/
 export default defineConfig({
+  url: 'https://bottyivan.github.io',
   base: '/introfy/',
   plugins: [
     tailwindcss(),
