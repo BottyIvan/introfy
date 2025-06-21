@@ -35,16 +35,23 @@ onMounted(async () => {
   }
 })
 
-// Helper function to pass the correct props
+// Helper function to provide route-specific props to components
 function getRouteProps(Component) {
-  if (Component === Home) {
+  // If the current route is 'home' or the component is Home,
+  // provide release information as props
+  const isHome =
+    (route.name && route.name.toLowerCase() === 'home') ||
+    Component === Home
+
+  if (isHome) {
     return {
       latestRelease: appStore.latestRelease,
       releases: appStore.releases
     }
-  } else {
-    return { menubar: pages.value }
   }
+
+  // For all other routes/components, provide the dynamic menubar as a prop
+  return { menubar: pages.value }
 }
 </script>
 
