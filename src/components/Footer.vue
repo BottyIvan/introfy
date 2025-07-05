@@ -78,11 +78,11 @@ const convertTextToSvg = (text, colorClass = 'text-white') => {
                     </div>
                     <!-- Centered links -->
                     <nav class="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-base">
-                        <a href="#/support" class="hover:underline">Support</a>
-                        <a href="#/privacy" class="hover:underline">Privacy</a>
-                        <a href="#/cookies" class="hover:underline">Manage Cookies</a>
-                        <a href="#/terms" class="hover:underline">Terms of Use</a>
-                        <a href="#/license" class="hover:underline">License</a>
+                        <a href="#/legal/support" class="hover:underline">Support</a>
+                        <a href="#/legal/privacy" class="hover:underline">Privacy</a>
+                        <a href="#/legal/cookies" class="hover:underline">Manage Cookies</a>
+                        <a href="#/legal/terms" class="hover:underline">Terms of Use</a>
+                        <a href="#/legal/license" class="hover:underline">License</a>
                     </nav>
                 </div>
             </div>
