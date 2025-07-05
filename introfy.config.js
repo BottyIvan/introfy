@@ -52,23 +52,28 @@ export default {
     mainFeatures: [
         {
             title: "Landing Generation",
-            description: "Create effective landing pages in minutes"
+            description: "Create effective landing pages in minutes",
+            image: null // "./images/your_image.png"
         },
         {
             title: "Modern Templates",
-            description: "Choose from various responsive and customizable templates"
+            description: "Choose from various responsive and customizable templates",
+            image: null // "./images/your_image.png"
         },
         {
             title: "GitHub Integration",
-            description: "Easily connect your repository to showcase changelog, contributors, and more"
+            description: "Easily connect your repository to showcase changelog, contributors, and more",
+            image: null // "./images/your_image.png"
         },
         {
             title: "SEO & Analytics",
-            description: "SEO optimization and integration with analytics tools"
+            description: "SEO optimization and integration with analytics tools",
+            image: null // "./images/your_image.png"
         },
         {
             title: "Customization",
-            description: "Dark mode, color palettes, and modular components"
+            description: "Dark mode, color palettes, and modular components",
+            image: null // "./images/your_image.png"
         }
     ],
     theme: {
