@@ -82,7 +82,7 @@ defineProps({
                                         <ul
                                             class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-4 mt-1 md:mt-0">
                                             <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
-                                                <RouterLink :to="subItem.name"
+                                                <RouterLink v-if="subItem.name" :to="subItem.name"
                                                     class="hover:text-blue-400 transition-colors truncate block"
                                                     :class="{ 'text-blue-400': route.path === subItem.name }"
                                                     :aria-label="`Vai a ${subItem.name}`">
@@ -102,7 +102,7 @@ defineProps({
                                             <ul
                                                 class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
                                                 <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
-                                                    <RouterLink :to="subItem.path"
+                                                    <RouterLink v-if="subItem.path" :to="subItem.path"
                                                         class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
                                                         {{ subItem.name }}
                                                     </RouterLink>
@@ -112,7 +112,7 @@ defineProps({
                                     </template>
 
                                     <!-- Fallback route -->
-                                    <RouterLink v-else :to="item.path"
+                                    <RouterLink v-else-if="item.path" :to="item.path"
                                         class="hover:text-blue-400 transition-colors truncate"
                                         :class="{ 'text-blue-400': route.path === item.path }"
                                         :aria-label="`Vai a ${item.title}`">
