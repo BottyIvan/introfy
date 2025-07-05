@@ -10,7 +10,7 @@ const icon = introfyConfig?.theme?.logo || './favicon.ico'
 
 const menuOpenState = ref(false)
 
-// Funzione per scrollare all'ancora
+//Function to scroll to a specific section by ID
 function scrollTo(id) {
     const el = document.getElementById(id)
     if (el) {
