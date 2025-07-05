@@ -35,6 +35,9 @@ This page gathers all the information you need to understand, install, configure
 
 **Introfy.dev** is a tool for generating modern, responsive landing pages for open source projects, featuring GitHub integration, changelog management, dark mode support, and much more.
 
+**Current version:** `0.1.0`  
+_Last updated: July 6, 2025_
+
 ---
 
 ## Installation
@@ -50,29 +53,30 @@ npm run dev
 
 ## Configuration
 
-Main configurations are managed via `.env` files and JSON files in `public/`:
+Main configurations are managed via `introfy.config.js` and JSON files in `public/`:
 
-- `.env`: variables like app name, description, GitHub repo, etc.
-- `public/app.json`: app info, features, main features.
-- `public/releases.json`: release history.
+- `introfy.config.js`: main app info, branding, features, navigation, GitHub repo, etc.
+- `public/releases.json`: release history (changelog).
 
-Example `.env`:
+Example `introfy.config.js`:
 
-```env
-# App name (displayed in the UI)
-VITE_APP_NAME=introfy.dev
-
-# Your GitHub username or organization
-VITE_GITHUB_USERNAME=BottyIvan
-
-# The GitHub repository name for your project
-VITE_GITHUB_REPOSITORY=brewhub
-
-# Filename for the releases changelog (should be in public/)
-VITE_RELEASES_FILENAME=releases.json
-
-# Filename for the main app configuration (should be in public/)
-VITE_APPLICATION_CONFIG_FILE=app.json
+```js
+export default {
+  app: {
+    name: "introfy.dev",
+    description: "...",
+    github: {
+      username: "BottyIvan",
+      repository: "introfy",
+    },
+    files: {
+      releases: "releases.json",
+    },
+    recentDays: 7,
+    screenshot: "./screen.png",
+  },
+  // ...other config
+};
 ```
 
 ---
@@ -94,12 +98,11 @@ Global state is managed with [Pinia](https://pinia.vuejs.org/):
 
 ```js
 import { defineStore } from "pinia";
-export const useAppStore = defineStore("app", {
-  state: () => ({
-    releases: [],
-    latestRelease: null,
-    appInfo: {},
-  }),
+export const useAppStore = defineStore("app", () => {
+  const releases = ref([]);
+  const latestRelease = ref(null);
+  const appInfo = ref({});
+  return { releases, latestRelease, appInfo };
 });
 ```
 
@@ -112,12 +115,16 @@ Markdown pages in `src/pages/*.md` are automatically imported as routes:
 
 ```js
 const pages = import.meta.glob("../pages/**/*.md");
-const markdownRoutes = Object.keys(pages).map((path) => ({
-  path: `/${name}`,
-  component: Markdown,
-  name,
-  props: { file: `${name}.md` },
-}));
+const markdownRoutes = Object.keys(pages).map((path) => {
+  const match = /\/pages\/(.*)\.md$/.exec(path);
+  const name = match ? match[1] : "";
+  return {
+    path: `/${name}`,
+    component: Markdown,
+    name: name || "Markdown",
+    props: { file: `${name}.md` },
+  };
+});
 ```
 
 ---
@@ -126,7 +133,7 @@ const markdownRoutes = Object.keys(pages).map((path) => ({
 
 - **Download release**: via GitHub API (`/repos/{user}/{repo}/releases/latest`).
 - **Changelog**: read from `public/releases.json`.
-- **App info**: read from `public/app.json`.
+- **App info**: read from `introfy.config.js`.
 
 ---
 
@@ -156,7 +163,7 @@ test("renders correctly", () => {
 
 - Reusable and modular components.
 - Centralized state with Pinia.
-- Separation between static data (JSON) and logic.
+- Separation between static data (config JS/JSON) and logic.
 - Write automated tests.
 
 ---
@@ -174,4 +181,4 @@ Edit `public/releases.json`.
 
 ---
 
-For more details and contributions, visit [our GitHub repository](https://github.com/BottyIvan/introfy.dev).
+For more details and contributions, visit [our GitHub repository](https://github.com/BottyIvan/introfy).
