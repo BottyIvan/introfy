@@ -1,6 +1,6 @@
 import Home from '@/components/Home.vue'
 import Markdown from '@/components/Markdown.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 // Import all .md pages as Vue components
 const pages = import.meta.glob('../pages/**/*.md')
@@ -31,8 +31,7 @@ const routes = [
 ]
 
 const router = createRouter({
-
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(import.meta.env.BASE_URL),
     routes
 })
 
