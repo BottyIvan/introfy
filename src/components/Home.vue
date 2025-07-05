@@ -9,6 +9,7 @@ import introfyConfig from '../../introfy.config'
 const appInfo = {
   tagline: introfyConfig.branding?.tagline,
   description: introfyConfig.app?.description,
+  screenshot: introfyConfig.app?.screenshot,
   features: introfyConfig.features,
   mainFeatures: introfyConfig.mainFeatures
 }
@@ -31,7 +32,7 @@ defineProps({
           <div class="flex justify-center" id="download">
             <DownloadLatest />
           </div>
-          <img src="../assets/screen.png" alt="App screenshot" class="mx-auto" />
+          <img :src="appInfo.screenshot" alt="App screenshot" class="mx-auto" />
         </section>
         <section class="my-4 md:my-8 flex flex-col gap-4 md:gap-6 text-center">
           <Features :features="appInfo.features" :id="'features'" />
