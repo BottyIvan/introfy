@@ -52,7 +52,25 @@ defineProps({
                             <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
                                 v-if="menubar && menubar.length" :key="JSON.stringify(menubar)" aria-label="Menu Items">
                                 <li v-for="item in menubar" :key="item.title">
-                                    <RouterLink v-if="!item.link" :to="item.path"
+                                    <template v-if="item.subdir !== ''">
+                                        <div class="relative">
+                                            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800"
+                                                tabindex="0">
+                                                {{ item.subdir }}
+                                                <i class="bi bi-chevron-down text-xs"></i>
+                                            </button>
+                                            <ul
+                                                class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-focus-within:block group-hover:block">
+                                                <li v-for="subItem in item.pages" :key="subItem.name">
+                                                    <RouterLink :to="subItem.path"
+                                                        class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                                        {{ subItem.name }}
+                                                    </RouterLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                    <RouterLink v-else-if="!item.link" :to="item.path"
                                         class="hover:text-blue-400 transition-colors truncate"
                                         :class="{ 'text-blue-400': $route.path === item.path }"
                                         aria-label="Vai a {{ item.title }}">
