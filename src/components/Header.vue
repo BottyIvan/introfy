@@ -77,12 +77,17 @@ defineProps({
 
                                 <!-- Internal links without subdir -->
                                 <template v-else-if="item.subdir === ''">
-                                    <RouterLink v-for="subItem in item.pages" :key="subItem.path" :to="subItem.path"
-                                        class="hover:text-blue-400 transition-colors truncate block"
-                                        :class="{ 'text-blue-400': route.path === subItem.path }"
-                                        :aria-label="`Vai a ${subItem.name}`">
-                                        {{ subItem.name }}
-                                    </RouterLink>
+                                    <ul
+                                        class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0">
+                                        <li v-for="subItem in item.pages" :key="subItem.path">
+                                            <RouterLink :to="subItem.path"
+                                                class="hover:text-blue-400 transition-colors truncate block"
+                                                :class="{ 'text-blue-400': route.path === subItem.path }"
+                                                :aria-label="`Vai a ${subItem.name}`">
+                                                {{ subItem.name }}
+                                            </RouterLink>
+                                        </li>
+                                    </ul>
                                 </template>
 
                                 <!-- Dropdown -->
