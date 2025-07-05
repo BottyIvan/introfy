@@ -12,7 +12,8 @@ export default {
         files: {
             releases: "releases.json",
         },
-        recentDays: 7
+        recentDays: 7,
+        screenshot: "./screen.png",
     },
     branding: {
         title: "Introfy",
