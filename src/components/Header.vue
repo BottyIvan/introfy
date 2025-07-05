@@ -55,69 +55,73 @@ defineProps({
                 <Transition name="fade-slide-drawer" mode="out-in">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6"
                         :key="menuOpenState">
-                        <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
-                            v-if="menubar && menubar.length" aria-label="Menu Items">
+                        <Transition name="fade-slide-menu" mode="out-in">
 
-                            <li v-for="item in menubar" :key="item.title" class="relative">
-                                <!-- Anchor links -->
-                                <a v-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
-                                    @click.prevent="scrollTo(item.link.replace('#', ''))"
-                                    class="hover:text-blue-400 transition-colors truncate"
-                                    :aria-label="`Vai a ${item.title}`">
-                                    {{ item.title }}
-                                </a>
+                            <!-- Menu items -->
+                            <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
+                                v-if="menubar && menubar.length" aria-label="Menu Items" :key="JSON.stringify(menubar)">
 
-                                <!-- External links -->
-                                <a v-else-if="item.link" :href="item.link"
-                                    :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
-                                    class="hover:text-blue-400 transition-colors truncate"
-                                    :aria-label="`Vai a ${item.title}`">
-                                    {{ item.title }}
-                                </a>
+                                <li v-for="item in menubar" class="relative">
+                                    <!-- Anchor links -->
+                                    <a v-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
+                                        @click.prevent="scrollTo(item.link.replace('#', ''))"
+                                        class="hover:text-blue-400 transition-colors truncate"
+                                        :aria-label="`Vai a ${item.title}`">
+                                        {{ item.title }}
+                                    </a>
 
-                                <!-- Internal links without subdir -->
-                                <template v-else-if="item.subdir === ''">
-                                    <ul
-                                        class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0">
-                                        <li v-for="subItem in item.pages" :key="subItem.path">
-                                            <RouterLink :to="subItem.path"
-                                                class="hover:text-blue-400 transition-colors truncate block"
-                                                :class="{ 'text-blue-400': route.path === subItem.path }"
-                                                :aria-label="`Vai a ${subItem.name}`">
-                                                {{ subItem.name }}
-                                            </RouterLink>
-                                        </li>
-                                    </ul>
-                                </template>
+                                    <!-- External links -->
+                                    <a v-else-if="item.link" :href="item.link"
+                                        :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
+                                        class="hover:text-blue-400 transition-colors truncate"
+                                        :aria-label="`Vai a ${item.title}`">
+                                        {{ item.title }}
+                                    </a>
 
-                                <!-- Dropdown -->
-                                <template v-else-if="item.subdir && item.pages && item.pages.length">
-                                    <div class="group inline-block">
-                                        <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800">
-                                            {{ item.subdir }}
-                                            <i class="bi bi-chevron-down text-xs"></i>
-                                        </button>
+                                    <!-- Internal links without subdir -->
+                                    <template v-else-if="item.subdir === ''">
                                         <ul
-                                            class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
-                                            <li v-for="subItem in item.pages" :key="subItem.name">
+                                            class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0">
+                                            <li v-for="subItem in item.pages" :key="subItem.path">
                                                 <RouterLink :to="subItem.path"
-                                                    class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
+                                                    class="hover:text-blue-400 transition-colors truncate block"
+                                                    :class="{ 'text-blue-400': route.path === subItem.path }"
+                                                    :aria-label="`Vai a ${subItem.name}`">
                                                     {{ subItem.name }}
                                                 </RouterLink>
                                             </li>
                                         </ul>
-                                    </div>
-                                </template>
+                                    </template>
 
-                                <!-- Fallback route -->
-                                <RouterLink v-else :to="item.path"
-                                    class="hover:text-blue-400 transition-colors truncate"
-                                    :class="{ 'text-blue-400': route.path === item.path }"
-                                    :aria-label="`Vai a ${item.title}`">
-                                    {{ item.title }}
-                                </RouterLink>
-                            </li>
-                        </ul>
+                                    <!-- Dropdown -->
+                                    <template v-else-if="item.subdir && item.pages && item.pages.length">
+                                        <div class="group inline-block">
+                                            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800">
+                                                {{ item.subdir }}
+                                                <i class="bi bi-chevron-down text-xs"></i>
+                                            </button>
+                                            <ul
+                                                class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
+                                                <li v-for="subItem in item.pages" :key="subItem.name">
+                                                    <RouterLink :to="subItem.path"
+                                                        class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
+                                                        {{ subItem.name }}
+                                                    </RouterLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </template>
+
+                                    <!-- Fallback route -->
+                                    <RouterLink v-else :to="item.path"
+                                        class="hover:text-blue-400 transition-colors truncate"
+                                        :class="{ 'text-blue-400': route.path === item.path }"
+                                        :aria-label="`Vai a ${item.title}`">
+                                        {{ item.title }}
+                                    </RouterLink>
+                                </li>
+                            </ul>
+                        </Transition>
 
                         <!-- Right controls -->
                         <div
