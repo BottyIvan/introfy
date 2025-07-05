@@ -31,7 +31,8 @@ defineProps({
                 <div
                     class="absolute inset-0 blur-3xl opacity-60 bg-gradient-to-br from-blue-700 via-blue-500 to-transparent z-0">
                 </div>
-                <img v-if="main.image" :src="main.image" :alt="main.title"
+                <img v-if="main.image ?? 'https://placehold.co/600x400'"
+                    :src="main.image ?? 'https://placehold.co/600x400'" :alt="main.title"
                     class="relative z-10 max-h-80 rounded-xl shadow-2xl" />
                 <div v-else
                     class="relative z-10 w-80 h-56 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
