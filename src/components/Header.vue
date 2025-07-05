@@ -86,7 +86,7 @@ defineProps({
                                                     class="hover:text-blue-400 transition-colors truncate block"
                                                     :class="{ 'text-blue-400': route.path === subItem.path }"
                                                     :aria-label="`Vai a ${subItem.name}`">
-                                                    {{ subItem.name }}
+                                                    {{ subItem.title }}
                                                 </RouterLink>
                                             </li>
                                         </ul>
