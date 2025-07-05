@@ -81,10 +81,10 @@ defineProps({
                                     <template v-else-if="item.subdir === ''">
                                         <ul
                                             class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-4 mt-1 md:mt-0">
-                                            <li v-for="subItem in item.pages" :key="subItem.path" class="py-1">
-                                                <RouterLink :to="subItem.path"
+                                            <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
+                                                <RouterLink :to="subItem.name"
                                                     class="hover:text-blue-400 transition-colors truncate block"
-                                                    :class="{ 'text-blue-400': route.path === subItem.path }"
+                                                    :class="{ 'text-blue-400': route.path === subItem.name }"
                                                     :aria-label="`Vai a ${subItem.name}`">
                                                     {{ subItem.title }}
                                                 </RouterLink>
