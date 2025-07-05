@@ -58,10 +58,9 @@ defineProps({
                         <Transition name="fade-slide-menu" mode="out-in">
 
                             <!-- Menu items -->
-                            <ul class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0"
+                            <ul class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-6 mt-2 md:mt-0"
                                 v-if="menubar && menubar.length" aria-label="Menu Items" :key="JSON.stringify(menubar)">
-
-                                <li v-for="item in menubar" class="relative">
+                                <li v-for="item in menubar" class="relative py-2 md:py-0">
                                     <!-- Anchor links -->
                                     <a v-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
                                         @click.prevent="scrollTo(item.link.replace('#', ''))"
@@ -81,8 +80,8 @@ defineProps({
                                     <!-- Internal links without subdir -->
                                     <template v-else-if="item.subdir === ''">
                                         <ul
-                                            class="flex flex-col md:flex-row w-full items-start gap-4 md:gap-6 mt-3 md:mt-0">
-                                            <li v-for="subItem in item.pages" :key="subItem.path">
+                                            class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-4 mt-1 md:mt-0">
+                                            <li v-for="subItem in item.pages" :key="subItem.path" class="py-1">
                                                 <RouterLink :to="subItem.path"
                                                     class="hover:text-blue-400 transition-colors truncate block"
                                                     :class="{ 'text-blue-400': route.path === subItem.path }"
@@ -102,7 +101,7 @@ defineProps({
                                             </button>
                                             <ul
                                                 class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
-                                                <li v-for="subItem in item.pages" :key="subItem.name">
+                                                <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
                                                     <RouterLink :to="subItem.path"
                                                         class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
                                                         {{ subItem.name }}
@@ -125,7 +124,7 @@ defineProps({
 
                         <!-- Right controls -->
                         <div
-                            class="flex items-center gap-3 min-w-max mt-3 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                            class="flex items-center gap-3 min-w-max mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
                             <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
                                 <i class="bi bi-moon-fill text-xl"></i>
                             </button>
