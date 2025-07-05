@@ -102,7 +102,7 @@ defineProps({
                                             <ul
                                                 class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
                                                 <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
-                                                    <RouterLink v-if="subItem.path" :to="subItem.path"
+                                                    <RouterLink v-if="subItem.name" :to="subItem.name"
                                                         class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
                                                         {{ subItem.name }}
                                                     </RouterLink>
