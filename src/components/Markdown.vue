@@ -14,6 +14,27 @@ const content = ref('');
 const frontmatter = ref({});
 const htmlContent = ref('');
 
+// Import all markdown files from the pages directory
+// This will create an object where keys are the file paths and values are functions to load the files
+// Note: Adjust the glob pattern if your markdown files are in a different directory
+// The 'as: "raw"' option allows us to import the raw content of the files
+const files = import.meta.glob('../pages/**/*.md', { as: 'raw' });
+
+// Function to load the markdown file based on the provided path
+async function loadFile(path) {
+    const importer = files[`../pages/${path}`];
+    if (!importer) {
+        throw new Error(`File not found: ../pages/${path}`);
+    }
+    const raw = await importer();
+    content.value = extractFrontmatter(raw);
+    htmlContent.value = marked.parse(content.value);
+}
+
+
+// Function to extract frontmatter from the markdown content
+// It looks for a YAML block at the start of the file and parses it
+// If no frontmatter is found, it returns the original content
 function extractFrontmatter(text) {
     const match = text.match(/^---\n([\s\S]*?)\n---\n?/);
     if (match) {
@@ -29,13 +50,11 @@ function extractFrontmatter(text) {
 
 onMounted(async () => {
     try {
-        const response = await fetch(new URL(`../pages/${props.file}`, import.meta.url));
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        if (props.file) {
+            await loadFile(props.file);
+        } else {
+            console.warn('No file prop provided');
         }
-        const raw = await response.text();
-        content.value = extractFrontmatter(raw);
-        htmlContent.value = marked.parse(content.value);
     } catch (error) {
         console.error('Error fetching markdown file:', error);
     }
@@ -44,13 +63,7 @@ onMounted(async () => {
 watch(() => props.file, async (newFile) => {
     if (newFile) {
         try {
-            const response = await fetch(new URL(`../pages/${newFile}`, import.meta.url));
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const raw = await response.text();
-            content.value = extractFrontmatter(raw);
-            htmlContent.value = marked.parse(content.value);
+            await loadFile(newFile);
         } catch (error) {
             console.error('Error fetching markdown file:', error);
         }
