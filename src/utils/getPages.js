@@ -23,15 +23,26 @@ export async function getAllPages() {
 
     const entries = []
 
+    const grouped = {}
+
     for (const path in pages) {
         const rawContent = await pages[path]()
         const data = parseFrontmatter(rawContent)
-        const match = /\/pages\/(.*)\.md$/.exec(path)
-        const name = match ? match[1] : ''
+        const match = /\/pages\/(?<subdir>.*\/)?(?<name>[^/]+)\.md$/.exec(path)
+        const subdir = match ? (match.groups.subdir || '').replace(/\/$/, '') : ''
+        const name = match ? match.groups.name : ''
 
-        entries.push({
-            path: `/${name}`,
+        if (!grouped[subdir]) grouped[subdir] = []
+        grouped[subdir].push({
+            name,
             ...data
+        })
+    }
+
+    for (const subdir in grouped) {
+        entries.push({
+            subdir,
+            pages: grouped[subdir]
         })
     }
 
