@@ -7,6 +7,15 @@ const icon = introfyConfig?.theme?.logo || './favicon.ico'
 
 const menuOpenState = ref(false)
 
+// Funzione per scrollare all'ancora
+function scrollTo(id) {
+    const el = document.getElementById(id)
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+    }
+    menuOpenState.value = false
+}
+
 defineProps({
     menubar: {
         type: Array,
@@ -46,13 +55,19 @@ defineProps({
                                     <RouterLink v-if="!item.link" :to="item.path"
                                         class="hover:text-blue-400 transition-colors truncate"
                                         :class="{ 'text-blue-400': $route.path === item.path }"
-                                        aria-label="{{ item.title }}">
+                                        aria-label="Vai a {{ item.title }}">
                                         {{ item.title }}
                                     </RouterLink>
+                                    <a v-else-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
+                                        @click.prevent="scrollTo(item.link.replace('#', ''))"
+                                        class="hover:text-blue-400 transition-colors truncate"
+                                        aria-label="Vai a {{ item.title }}">
+                                        {{ item.title }}
+                                    </a>
                                     <a v-else :href="item.link"
                                         :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
                                         class="hover:text-blue-400 transition-colors truncate"
-                                        aria-label="{{ item.title }}">
+                                        aria-label="Vai a {{ item.title }}">
                                         {{ item.title }}
                                     </a>
                                 </li>
