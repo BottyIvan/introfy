@@ -53,7 +53,8 @@ export default {
         {
             title: "Landing Generation",
             description: "Create effective landing pages in minutes",
-            image: null // "./images/your_image.png"
+            image: 'https://placehold.co/600x400', // "./images/your_image.png" or null for no image
+            imagePosition: "right" // "left" or "right"
         },
         {
             title: "Modern Templates",
