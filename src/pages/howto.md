@@ -192,4 +192,4 @@ export default {
 ---
 
 Have questions or suggestions?  
-Open an issue on GitHub or see the [official Introfy documentation](https://introfy.dev/docs) for more details and advanced use cases.
+Open an issue on GitHub or see the [official Introfy documentation](https://github.com/BottyIvan/introfy/wiki) for more details and advanced use cases.
