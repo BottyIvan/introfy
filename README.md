@@ -42,6 +42,28 @@
 
 ## Getting Started
 
+### Installation
+
+Install the Introfy CLI globally:
+
+```bash
+npm install -g create-introfy
+```
+
+### Create a New Project
+
+Initialize a new Introfy project with:
+
+```bash
+create-introfy
+```
+
+Follow the interactive prompts to configure your landing page.
+
+---
+
+## Local Development
+
 1. **Clone the repository**
 
    ```bash
@@ -55,15 +77,40 @@
    npm install
    ```
 
-3. **Start the project locally**
+3. **Start the development server**
 
    ```bash
    npm run dev
    ```
 
+   The app will be available at `http://localhost:5173` (or the port shown in your terminal).
+
+---
+
+Continue customizing your project as described below.
+
 4. **Customize your landing page**
-   - Edit the configuration files
-   - Add or modify Markdown pages in `src/pages/`
+
+   - Edit [`introfy.config.js`](introfy.config.js) to configure name, description, branding, features, and navigation.
+   - Update the changelog in [`public/releases.json`](public/releases.json).
+   - Add or edit documentation pages in Markdown in the [`src/pages/`](src/pages/) folder.
+
+5. **View the documentation**
+
+   - Access Markdown pages via navigation or directly by URL (e.g., `#/documentation`).
+
+6. **Build for production**
+
+   ```bash
+   npm run build
+   ```
+
+7. **Deploy**
+   - You can deploy the `dist/` folder to any static hosting (Vercel, Netlify, GitHub Pages, etc.).
+   - For GitHub Pages, a GitHub Actions workflow is already available (`.github/workflows/deploy.yml`).
+
+> [!NOTE]
+> Some features are under development. Check the updated documentation in the Markdown pages (`src/pages/`) or on [GitHub](https://github.com/BottyIvan/introfy).
 
 ## Deployment
 
