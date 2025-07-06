@@ -65,7 +65,7 @@ defineProps({
                                     <a v-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
                                         @click.prevent="scrollTo(item.link.replace('#', ''))"
                                         class="hover:text-blue-400 transition-colors truncate"
-                                        :aria-label="`Vai a ${item.title}`">
+                                        :aria-label="`Go to ${item.title}`">
                                         {{ item.title }}
                                     </a>
 
@@ -73,7 +73,7 @@ defineProps({
                                     <a v-else-if="item.link" :href="item.link"
                                         :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
                                         class="hover:text-blue-400 transition-colors truncate"
-                                        :aria-label="`Vai a ${item.title}`">
+                                        :aria-label="`Go to ${item.title}`">
                                         {{ item.title }}
                                     </a>
 
@@ -85,7 +85,7 @@ defineProps({
                                                 <RouterLink v-if="subItem.name" :to="subItem.name"
                                                     class="hover:text-blue-400 transition-colors truncate block"
                                                     :class="{ 'text-blue-400': route.path === subItem.name }"
-                                                    :aria-label="`Vai a ${subItem.name}`">
+                                                    :aria-label="`Go to ${subItem.name}`">
                                                     {{ subItem.title }}
                                                 </RouterLink>
                                             </li>
@@ -95,7 +95,8 @@ defineProps({
                                     <!-- Dropdown -->
                                     <template v-else-if="item.subdir && item.pages && item.pages.length">
                                         <div class="group inline-block">
-                                            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800">
+                                            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800"
+                                                :aria-label="`Go to ${item.subdir}`">
                                                 {{ item.subdir }}
                                                 <i class="bi bi-chevron-down text-xs"></i>
                                             </button>
@@ -103,7 +104,8 @@ defineProps({
                                                 class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
                                                 <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
                                                     <RouterLink v-if="subItem.name" :to="subItem.name"
-                                                        class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
+                                                        class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate"
+                                                        :aria-current-value="route.path === subItem.name">
                                                         {{ subItem.name }}
                                                     </RouterLink>
                                                 </li>
@@ -115,7 +117,7 @@ defineProps({
                                     <RouterLink v-else-if="item.path" :to="item.path"
                                         class="hover:text-blue-400 transition-colors truncate"
                                         :class="{ 'text-blue-400': route.path === item.path }"
-                                        :aria-label="`Vai a ${item.title}`">
+                                        :aria-label="`Go to ${item.title}`">
                                         {{ item.title }}
                                     </RouterLink>
                                 </li>
@@ -131,7 +133,7 @@ defineProps({
                             <input v-if="search" type="text" placeholder="Search Docs"
                                 class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                                 style="width: 140px;" />
-                            <a href="#download"
+                            <a href="#download" @click.prevent="scrollTo('download')"
                                 class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">
                                 Download
                             </a>
