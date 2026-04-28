@@ -14,19 +14,16 @@ const content = ref('');
 const frontmatter = ref({});
 const htmlContent = ref('');
 
-// Import all markdown files from the pages directory
-// This will create an object where keys are the file paths and values are functions to load the files
-// Note: Adjust the glob pattern if your markdown files are in a different directory
-// The 'as: "raw"' option allows us to import the raw content of the files
-const files = import.meta.glob('../pages/**/*.md', { as: 'raw' });
+const modules = import.meta.glob('../pages/**/*.md', { query: '?raw', import: 'default' })
 
 // Function to load the markdown file based on the provided path
 async function loadFile(path) {
-    const importer = files[`../pages/${path}`];
-    if (!importer) {
-        throw new Error(`File not found: ../pages/${path}`);
+    const key = `../pages/${path}`
+    const loader = modules[key]
+    if (!loader) {
+        throw new Error(`File not found: ${path}`)
     }
-    const raw = await importer();
+    const raw = await loader()
     content.value = extractFrontmatter(raw);
     htmlContent.value = marked.parse(content.value);
 }
