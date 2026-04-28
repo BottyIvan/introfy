@@ -1,9 +1,11 @@
 <script setup>
+import introfyConfig from '../../introfy.config'
+
 defineProps({
     release: Object
 })
 
-const RECENT_DAYS = import.meta.env.VITE_RECENT_DAYS ? parseInt(import.meta.env.VITE_RECENT_DAYS) : 7;
+const RECENT_DAYS = introfyConfig?.app?.recentDays ?? 7;
 
 // Function to check if the release date is within the recent days threshold
 const checkIfRecent = (date) => {
@@ -15,8 +17,8 @@ const checkIfRecent = (date) => {
 </script>
 
 <template>
-    <div v-if="release && checkIfRecent(release.date)">
-        <div v-if="release && checkIfRecent(release.date)"
+    <div v-if="release">
+        <div v-if="checkIfRecent(release.date)"
             class="bg-card border-main border rounded-2xl shadow-lg p-6 mb-6 text-left">
             <h2 class="text-2xl font-bold mb-2 text-primary flex items-center gap-2">
                 <span>✨</span> Latest Release: <span class="text-main">{{ release.version }}</span>
