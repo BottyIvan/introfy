@@ -49,42 +49,47 @@ const convertTextToSvg = (text, colorClass = 'text-white') => {
 </script>
 
 <template>
-    <footer class="bg-gray-900" :id="id">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col gap-6 py-10 px-4 text-gray-400">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <!-- Social icons on the left -->
-                    <div class="flex items-center space-x-8">
-                        <a :href="`https://x.com/${twitterUsername}`" target="_blank" rel="noopener" aria-label="X"
-                            class="text-2xl hover:text-white transition-colors">
-                            <i class="bi bi-twitter-x"></i>
-                        </a>
-                        <a :href="`https://github.com/${githubUsername}`" target="_blank" rel="noopener"
-                            aria-label="GitHub" class="text-2xl hover:text-white transition-colors">
-                            <i class="bi bi-github"></i>
-                        </a>
-                        <a :href="`https://youtube.com/${youtubeUsername}`" target="_blank" rel="noopener"
-                            aria-label="YouTube" class="text-2xl hover:text-white transition-colors">
-                            <i class="bi bi-youtube"></i>
-                        </a>
-                        <a :href="`https://facebook.com/${facebookUsername}`" target="_blank" rel="noopener"
-                            aria-label="Facebook" class="text-2xl hover:text-white transition-colors">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a :href="`https://instagram.com/${instagramUsername}`" target="_blank" rel="noopener"
-                            aria-label="Instagram" class="text-2xl hover:text-white transition-colors">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                    </div>
-                    <!-- Centered links -->
-                    <nav class="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-base">
-                        <a href="#/legal/support" class="hover:underline">Support</a>
-                        <a href="#/legal/privacy" class="hover:underline">Privacy</a>
-                        <a href="#/legal/cookies" class="hover:underline">Manage Cookies</a>
-                        <a href="#/legal/terms" class="hover:underline">Terms of Use</a>
-                        <a href="#/legal/license" class="hover:underline">License</a>
-                    </nav>
+    <footer class="bg-gray-900 border-t border-gray-800" :id="id">
+        <div class="max-w-7xl mx-auto px-4 py-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+
+                <!-- Social icons -->
+                <div class="flex items-center gap-5">
+                    <a :href="`https://x.com/${twitterUsername}`" target="_blank" rel="noopener" aria-label="X"
+                        class="text-xl text-gray-500 hover:text-white transition-colors">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                    <a :href="`https://github.com/${githubUsername}`" target="_blank" rel="noopener" aria-label="GitHub"
+                        class="text-xl text-gray-500 hover:text-white transition-colors">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a :href="`https://youtube.com/${youtubeUsername}`" target="_blank" rel="noopener"
+                        aria-label="YouTube" class="text-xl text-gray-500 hover:text-white transition-colors">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                    <a :href="`https://facebook.com/${facebookUsername}`" target="_blank" rel="noopener"
+                        aria-label="Facebook" class="text-xl text-gray-500 hover:text-white transition-colors">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a :href="`https://instagram.com/${instagramUsername}`" target="_blank" rel="noopener"
+                        aria-label="Instagram" class="text-xl text-gray-500 hover:text-white transition-colors">
+                        <i class="bi bi-instagram"></i>
+                    </a>
                 </div>
+
+                <!-- Legal links -->
+                <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
+                    <RouterLink to="/legal/support" class="hover:text-gray-300 transition-colors">Support</RouterLink>
+                    <RouterLink to="/legal/privacy" class="hover:text-gray-300 transition-colors">Privacy</RouterLink>
+                    <RouterLink to="/legal/cookies" class="hover:text-gray-300 transition-colors">Cookies</RouterLink>
+                    <RouterLink to="/legal/terms" class="hover:text-gray-300 transition-colors">Terms</RouterLink>
+                    <RouterLink to="/legal/license" class="hover:text-gray-300 transition-colors">License</RouterLink>
+                </nav>
+
+                <!-- Copyright -->
+                <p class="text-sm text-gray-600 md:text-right">
+                    &copy; {{ new Date().getFullYear() }} {{ appInfo?.name }}
+                </p>
             </div>
         </div>
     </footer>

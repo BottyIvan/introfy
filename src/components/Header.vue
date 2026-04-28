@@ -7,16 +7,11 @@ const route = useRoute()
 
 const appName = introfyConfig?.app?.name || 'Introfy'
 const icon = introfyConfig?.theme?.logo || './favicon.ico'
+const menuOpen = ref(false)
 
-const menuOpenState = ref(false)
-
-//Function to scroll to a specific section by ID
 function scrollTo(id) {
-    const el = document.getElementById(id)
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth' })
-    }
-    menuOpenState.value = false
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    menuOpen.value = false
 }
 
 defineProps({
@@ -32,150 +27,113 @@ defineProps({
 </script>
 
 <template>
-    <header class="bg-gray-900">
+    <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
         <div
-            class="max-w-7xl mx-auto text-white p-4 flex items-center justify-between flex-wrap md:flex-nowrap font-sans">
+            class="max-w-7xl mx-auto text-white px-4 py-3 flex items-center justify-between flex-wrap md:flex-nowrap font-sans">
+
             <!-- Logo -->
-            <RouterLink to="/" class="flex items-center gap-3 min-w-max hover:opacity-80 mb-3 md:mb-0">
-                <img :src="icon" alt="App Logo" width="32" class="rounded" />
-                <span class="text-xl font-bold">{{ appName }}</span>
+            <RouterLink to="/"
+                class="flex items-center gap-2.5 min-w-max hover:opacity-80 transition-opacity mb-2 md:mb-0">
+                <img :src="icon" alt="App Logo" width="30" class="rounded-md" />
+                <span class="text-lg font-bold tracking-tight">{{ appName }}</span>
             </RouterLink>
 
             <!-- Hamburger -->
-            <button class="md:hidden ml-auto text-2xl p-2 rounded hover:bg-gray-700"
-                @click="menuOpenState = !menuOpenState" aria-label="Toggle menu">
-                <i :class="menuOpenState ? 'bi bi-x-lg' : 'bi bi-list'"></i>
+            <button class="md:hidden ml-auto text-xl p-2 rounded-lg hover:bg-gray-800 transition-colors"
+                @click="menuOpen = !menuOpen" aria-label="Toggle menu">
+                <i :class="menuOpen ? 'bi bi-x-lg' : 'bi bi-list'"></i>
             </button>
 
             <!-- Navigation -->
-            <nav class="w-full md:w-auto md:flex-1 md:ml-8"
-                :class="{ 'block': menuOpenState, 'hidden': !menuOpenState, 'md:block': true }"
+            <nav class="w-full md:w-auto md:flex-1 md:ml-8 md:block" :class="menuOpen ? 'block' : 'hidden'"
                 aria-label="Main Navigation">
 
-                <Transition name="fade-slide-drawer" mode="out-in">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6"
-                        :key="menuOpenState">
-                        <Transition name="fade-slide-menu" mode="out-in">
+                <div
+                    class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 pt-3 md:pt-0">
 
-                            <!-- Menu items -->
-                            <ul class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-6 mt-2 md:mt-0"
-                                v-if="menubar && menubar.length" aria-label="Menu Items" :key="JSON.stringify(menubar)">
-                                <li v-for="item in menubar" class="relative py-2 md:py-0">
-                                    <!-- Anchor links -->
-                                    <a v-if="item.link && item.link.startsWith('#')" href="javascript:void(0)"
-                                        @click.prevent="scrollTo(item.link.replace('#', ''))"
-                                        class="hover:text-blue-400 transition-colors truncate"
-                                        :aria-label="`Go to ${item.title}`">
-                                        {{ item.title }}
-                                    </a>
+                    <!-- Menu items -->
+                    <ul v-if="menubar?.length" class="flex flex-col md:flex-row w-full items-start gap-1 md:gap-0.5">
+                        <li v-for="item in menubar" :key="item.title ?? item.subdir" class="relative">
 
-                                    <!-- External links -->
-                                    <a v-else-if="item.link" :href="item.link"
-                                        :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
-                                        class="hover:text-blue-400 transition-colors truncate"
-                                        :aria-label="`Go to ${item.title}`">
-                                        {{ item.title }}
-                                    </a>
+                            <!-- Anchor link -->
+                            <a v-if="item.link?.startsWith('#')" href="javascript:void(0)"
+                                @click.prevent="scrollTo(item.link.slice(1))"
+                                class="block px-3 py-1.5 rounded-md text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                                :aria-label="`Go to ${item.title}`">
+                                {{ item.title }}
+                            </a>
 
-                                    <!-- Internal links without subdir -->
-                                    <template v-else-if="item.subdir === ''">
-                                        <ul
-                                            class="flex flex-col md:flex-row w-full items-start gap-2 md:gap-4 mt-1 md:mt-0">
-                                            <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
-                                                <RouterLink v-if="subItem.name" :to="'/' + subItem.name"
-                                                    class="hover:text-blue-400 transition-colors truncate block"
-                                                    :class="{ 'text-blue-400': route.path === '/' + subItem.name }"
-                                                    :aria-label="`Go to ${subItem.name}`">
-                                                    {{ subItem.title }}
-                                                </RouterLink>
-                                            </li>
-                                        </ul>
-                                    </template>
+                            <!-- External / absolute link -->
+                            <a v-else-if="item.link" :href="item.link"
+                                :target="item.link.startsWith('http') ? '_blank' : '_self'" rel="noopener"
+                                class="block px-3 py-1.5 rounded-md text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                                :aria-label="`Go to ${item.title}`">
+                                {{ item.title }}
+                            </a>
 
-                                    <!-- Dropdown -->
-                                    <template v-else-if="item.subdir && item.pages && item.pages.length">
-                                        <div class="group inline-block">
-                                            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-800"
-                                                :aria-label="`Go to ${item.subdir}`">
-                                                {{ item.subdir }}
-                                                <i class="bi bi-chevron-down text-xs"></i>
-                                            </button>
-                                            <ul
-                                                class="absolute left-0 mt-1 min-w-[140px] bg-white dark:bg-slate-900 rounded shadow border z-50 hidden group-hover:block">
-                                                <li v-for="subItem in item.pages" :key="subItem.name" class="py-1">
-                                                    <RouterLink v-if="subItem.name" :to="`/${item.subdir}/${subItem.name}`"
-                                                        class="block px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 truncate">
-                                                        {{ subItem.title || subItem.name }}
-                                                    </RouterLink>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </template>
-
-                                    <!-- Fallback route -->
-                                    <RouterLink v-else-if="item.path" :to="item.path"
-                                        class="hover:text-blue-400 transition-colors truncate"
-                                        :class="{ 'text-blue-400': route.path === item.path }"
-                                        :aria-label="`Go to ${item.title}`">
-                                        {{ item.title }}
+                            <!-- Flat pages (subdir = '') -->
+                            <ul v-else-if="item.subdir === ''" class="flex flex-col md:flex-row items-start gap-0.5">
+                                <li v-for="subItem in item.pages" :key="subItem.name">
+                                    <RouterLink v-if="subItem.name" :to="'/' + subItem.name"
+                                        class="block px-3 py-1.5 rounded-md text-sm transition-colors" :class="route.path === '/' + subItem.name
+                                            ? 'text-white bg-gray-800 font-medium'
+                                            : 'text-gray-300 hover:text-white hover:bg-gray-800'">
+                                        {{ subItem.title }}
                                     </RouterLink>
                                 </li>
                             </ul>
-                        </Transition>
 
-                        <!-- Right controls -->
-                        <div
-                            class="flex items-center gap-3 min-w-max mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                            <button class="p-2 rounded hover:bg-gray-700" aria-label="Toggle theme">
-                                <i class="bi bi-moon-fill text-xl"></i>
-                            </button>
-                            <input v-if="search" type="text" placeholder="Search Docs"
-                                class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                                style="width: 140px;" />
-                            <a href="#download" @click.prevent="scrollTo('download')"
-                                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded font-semibold text-sm transition">
-                                Download
-                            </a>
-                        </div>
+                            <!-- Dropdown -->
+                            <div v-else-if="item.subdir && item.pages?.length" class="group relative">
+                                <button
+                                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors capitalize">
+                                    {{ item.subdir }}
+                                    <i
+                                        class="bi bi-chevron-down text-xs opacity-60 group-hover:opacity-100 transition-transform group-hover:rotate-180"></i>
+                                </button>
+                                <ul
+                                    class="absolute left-0 top-full mt-1 min-w-[160px] bg-gray-900 border border-gray-700 rounded-xl shadow-xl z-50 hidden group-hover:block py-1">
+                                    <li v-for="subItem in item.pages" :key="subItem.name">
+                                        <RouterLink v-if="subItem.name" :to="`/${item.subdir}/${subItem.name}`"
+                                            class="block px-4 py-2 text-sm transition-colors capitalize" :class="route.path === `/${item.subdir}/${subItem.name}`
+                                                ? 'text-blue-400 bg-gray-800'
+                                                : 'text-gray-300 hover:text-white hover:bg-gray-800'">
+                                            {{ subItem.title || subItem.name }}
+                                        </RouterLink>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Fallback internal route -->
+                            <RouterLink v-else-if="item.path" :to="item.path"
+                                class="block px-3 py-1.5 rounded-md text-sm transition-colors" :class="route.path === item.path
+                                    ? 'text-white bg-gray-800 font-medium'
+                                    : 'text-gray-300 hover:text-white hover:bg-gray-800'"
+                                :aria-label="`Go to ${item.title}`">
+                                {{ item.title }}
+                            </RouterLink>
+                        </li>
+                    </ul>
+
+                    <!-- Right controls -->
+                    <div
+                        class="flex items-center gap-2 min-w-max mt-2 md:mt-0 w-full md:w-auto justify-between md:justify-end border-t border-gray-800 pt-3 md:border-0 md:pt-0">
+                        <input v-if="search" type="text" placeholder="Search…"
+                            class="bg-gray-800 text-white px-3 py-1.5 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm placeholder-gray-500 transition"
+                            style="width: 140px;" />
+                        <a v-if="route.name?.toLowerCase() === 'home'" href="#download"
+                            @click.prevent="scrollTo('download')"
+                            class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg font-semibold text-sm transition-colors">
+                            Download
+                        </a>
+                        <RouterLink v-else to="/"
+                            class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-800">
+                            <i class="bi bi-house text-base"></i>
+                            Home
+                        </RouterLink>
                     </div>
-                </Transition>
+                </div>
             </nav>
         </div>
     </header>
 </template>
-
-<style scoped>
-.fade-slide-menu-enter-active,
-.fade-slide-menu-leave-active {
-    transition: all 0.3s ease;
-}
-
-.fade-slide-menu-enter-from,
-.fade-slide-menu-leave-to {
-    opacity: 0;
-    transform: translateX(-10px);
-}
-
-.fade-slide-menu-enter-to,
-.fade-slide-menu-leave-from {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.fade-slide-drawer-enter-active,
-.fade-slide-drawer-leave-active {
-    transition: all 0.3s ease;
-}
-
-.fade-slide-drawer-enter-from,
-.fade-slide-drawer-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-.fade-slide-drawer-enter-to,
-.fade-slide-drawer-leave-from {
-    opacity: 1;
-    transform: translateY(0);
-}
-</style>

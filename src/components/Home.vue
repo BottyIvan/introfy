@@ -21,25 +21,36 @@ defineProps({
 </script>
 
 <template>
-  <main class="bg-gray-900 p-4 md:p-8 font-sans z-10 relative min-h-screen flex flex-col">
-    <div class="flex-1 flex flex-col justify-center">
-      <div class="max-w-4xl md:max-w-7xl mx-auto w-full">
-        <section
-          class="my-4 md:my-8 flex flex-col gap-4 md:gap-6 text-center min-h-[60vh] md:min-h-svh justify-center px-2 md:px-0">
-          <LatestRelease :release="latestRelease" />
-          <h1 class="text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-white">{{ appInfo.tagline }}</h1>
-          <p class="text-base md:text-lg text-gray-300 mb-2 md:mb-4">{{ appInfo.description }}</p>
-          <div class="flex justify-center" id="download">
-            <DownloadLatest />
-          </div>
-          <img :src="appInfo.screenshot" alt="App screenshot" class="mx-auto" />
-        </section>
-        <section class="my-4 md:my-8 flex flex-col gap-4 md:gap-6 text-center">
-          <Features :features="appInfo.features" :id="'features'" />
-          <MainFeatures :mainFeatures="appInfo.mainFeatures" :id="'main-features'" />
-          <ReleaseList :releases="releases" :id="'releases'" />
-        </section>
+  <main class="bg-gray-900 font-sans min-h-screen">
+
+    <!-- Hero -->
+    <section class="relative flex flex-col items-center justify-center text-center min-h-[90vh] px-4 overflow-hidden">
+      <!-- Gradient glow background -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div
+          class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-blue-600/20 blur-3xl rounded-full">
+        </div>
       </div>
+
+      <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6">
+        <LatestRelease :release="latestRelease" />
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight">
+          {{ appInfo.tagline }}
+        </h1>
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl">{{ appInfo.description }}</p>
+        <div id="download" class="flex gap-3 flex-wrap justify-center">
+          <DownloadLatest />
+        </div>
+        <img v-if="appInfo.screenshot" :src="appInfo.screenshot" alt="App screenshot" class="mx-auto" />
+      </div>
+    </section>
+
+    <!-- Features & more -->
+    <div class="max-w-7xl mx-auto px-4 pb-16 flex flex-col gap-20">
+      <Features :features="appInfo.features" id="features" />
+      <MainFeatures :mainFeatures="appInfo.mainFeatures" id="main-features" />
+      <ReleaseList :releases="releases" id="releases" />
     </div>
+
   </main>
 </template>
