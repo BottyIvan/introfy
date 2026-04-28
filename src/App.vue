@@ -9,23 +9,26 @@ import Footer from './components/Footer.vue'
 import Home from './components/Home.vue'
 
 const appStore = useAppStore()
-const pages = ref([])
+const pages = ref(getAllPages())
 
 // Use menubar from introfy config
 const staticMenubar = computed(() => introfyConfig?.theme?.nav)
 
 const githubUsername = introfyConfig?.app?.files?.github?.username
 const route = useRoute()
-// Use computed to change the menu based on the route
-const currentMenubar = computed(() =>
-  route.name && route.name.toLowerCase() === 'home' ? staticMenubar.value : pages.value
-)
+// On home: show anchor links + markdown page links
+// On other routes: show only markdown page links
+const currentMenubar = computed(() => {
+  if (route.name?.toLowerCase() === 'home') {
+    return [...(staticMenubar.value ?? []), ...pages.value]
+  }
+  return pages.value
+})
 
 onMounted(async () => {
   try {
     const releasesResponse = await fetch(introfyConfig?.app?.files?.releases)
     const releasesData = await releasesResponse.json()
-    pages.value = await getAllPages()
     appStore.$patch({
       releases: releasesData,
       latestRelease: releasesData[0],
@@ -63,7 +66,26 @@ function getRouteProps(Component) {
 <template>
   <Header :search="false" :menubar="currentMenubar" />
   <router-view v-slot="{ Component }">
-    <component :is="Component" v-bind="getRouteProps(Component)" />
+    <Transition name="page" mode="out-in">
+      <component :is="Component" v-bind="getRouteProps(Component)" :key="$route.path" />
+    </Transition>
   </router-view>
   <Footer :githubUsername="githubUsername" :appInfo="appStore.appInfo" :id="'support'" />
 </template>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+</style>
