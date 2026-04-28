@@ -11,7 +11,7 @@ tags:
 sidebar: true
 ---
 
-_Last updated: July 5, 2025_
+_Last updated: April 28, 2026_
 
 # Complete Guide to `introfy.config.js`
 
@@ -28,10 +28,10 @@ Defines core project info.
 ```js
 app: {
   name: "introfy.dev", // App or domain name (title, SEO).
-  description: "Create landing pages for open source projects", // Short description for SEO/social.
+  description: "Introfy.dev is a tool designed to help developers quickly and easily create beautiful and effective landing pages for their open source projects.",
   github: {
     username: "YOUR_USERNAME", // GitHub username/org.
-    repository: "YOUR_REPO", // GitHub repo name.
+    repository: "YOUR_REPO",   // GitHub repo name.
   },
   files: {
     releases: "releases.json", // JSON file for changelogs.
@@ -56,7 +56,7 @@ Controls the main title and subtitle.
 ```js
 branding: {
   title: "Introfy", // Main hero title.
-  tagline: "Focus on your project.\nWe'll take care of the landing page.", // Subtitle (use \n for line breaks).
+  tagline: "You think about your project.\nWe think about the landing page.", // Subtitle (use \n for line breaks).
 },
 ```
 
@@ -74,9 +74,13 @@ Lists key project strengths below the hero.
 
 ```js
 features: [
-  { text: "Custom landing pages", icon: "lightning-fill" },
-  { text: "Modern templates", icon: "layout-text-window-reverse" },
-  { text: "GitHub integration", icon: "github" },
+  { text: "Rapid generation of customized landing pages", icon: "lightning-fill" },
+  { text: "Modern and responsive templates", icon: "layout-text-window-reverse" },
+  { text: "Integration with GitHub repositories", icon: "github" },
+  { text: "Showcase and changelog management", icon: "card-list" },
+  { text: "SEO optimized for open source projects", icon: "search" },
+  { text: "Dark mode support and color customization", icon: "moon-stars-fill" },
+  { text: "Easy deploy to Vercel and Netlify", icon: "cloud-upload-fill" },
 ],
 ```
 
@@ -99,8 +103,28 @@ mainFeatures: [
   {
     title: "Landing Generation",
     description: "Create effective landing pages in minutes",
-    image: "./images/landing.png", // Optional, recommended.
-    imagePosition: "right" // "left" or "right".
+    image: "https://placehold.co/600x400", // URL or local path like "./images/your_image.png"
+    imagePosition: "right" // "left" or "right"
+  },
+  {
+    title: "Modern Templates",
+    description: "Choose from various responsive and customizable templates",
+    image: null // no image
+  },
+  {
+    title: "GitHub Integration",
+    description: "Easily connect your repository to showcase changelog, contributors, and more",
+    image: null
+  },
+  {
+    title: "SEO & Analytics",
+    description: "SEO optimization and integration with analytics tools",
+    image: null
+  },
+  {
+    title: "Customization",
+    description: "Dark mode, color palettes, and modular components",
+    image: null
   },
 ],
 ```
@@ -122,7 +146,9 @@ theme: {
   logo: "./icon-512-maskable.png", // Logo for navbar/meta.
   nav: [
     { title: "Features", link: "#features" },
+    { title: "Main Features", link: "#main-features" },
     { title: "Releases", link: "#releases" },
+    { title: "Support", link: "#support" },
   ],
 },
 ```
@@ -145,7 +171,7 @@ theme: {
 export default {
   app: {
     name: "introfy.dev",
-    description: "Create landing pages for open source projects",
+    description: "Introfy.dev is a tool designed to help developers quickly and easily create beautiful and effective landing pages for their open source projects.",
     github: { username: "YOUR_USERNAME", repository: "YOUR_REPO" },
     files: { releases: "releases.json" },
     recentDays: 7,
@@ -153,26 +179,52 @@ export default {
   },
   branding: {
     title: "Introfy",
-    tagline: "Focus on your project.\nWe'll take care of the landing page.",
+    tagline: "You think about your project.\nWe think about the landing page.",
   },
   features: [
-    { text: "Custom landing pages", icon: "lightning-fill" },
-    { text: "Modern templates", icon: "layout-text-window-reverse" },
-    { text: "GitHub integration", icon: "github" },
+    { text: "Rapid generation of customized landing pages", icon: "lightning-fill" },
+    { text: "Modern and responsive templates", icon: "layout-text-window-reverse" },
+    { text: "Integration with GitHub repositories", icon: "github" },
+    { text: "Showcase and changelog management", icon: "card-list" },
+    { text: "SEO optimized for open source projects", icon: "search" },
+    { text: "Dark mode support and color customization", icon: "moon-stars-fill" },
+    { text: "Easy deploy to Vercel and Netlify", icon: "cloud-upload-fill" },
   ],
   mainFeatures: [
     {
       title: "Landing Generation",
       description: "Create effective landing pages in minutes",
-      image: "./images/landing.png",
+      image: "https://placehold.co/600x400",
       imagePosition: "right",
+    },
+    {
+      title: "Modern Templates",
+      description: "Choose from various responsive and customizable templates",
+      image: null,
+    },
+    {
+      title: "GitHub Integration",
+      description: "Easily connect your repository to showcase changelog, contributors, and more",
+      image: null,
+    },
+    {
+      title: "SEO & Analytics",
+      description: "SEO optimization and integration with analytics tools",
+      image: null,
+    },
+    {
+      title: "Customization",
+      description: "Dark mode, color palettes, and modular components",
+      image: null,
     },
   ],
   theme: {
     logo: "./icon-512-maskable.png",
     nav: [
       { title: "Features", link: "#features" },
+      { title: "Main Features", link: "#main-features" },
       { title: "Releases", link: "#releases" },
+      { title: "Support", link: "#support" },
     ],
   },
 };
