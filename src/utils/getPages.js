@@ -1,13 +1,13 @@
 import { marked } from 'marked'
 import fm from 'front-matter'
 
-// Dynamically import all markdown files in the pages directory and its subdirectories
-const modules = import.meta.glob('../pages/**/*.md', { query: '?raw', import: 'default' });
+// Eagerly import all markdown files at build time (synchronous, no async loading needed)
+const modules = import.meta.glob('../pages/**/*.md', { query: '?raw', import: 'default', eager: true })
 
 /**
- * Parses raw markdown content to extract frontmatter and convert body to HTML
- * @param {string} raw - Raw markdown content
- * @returns {object} Object containing frontmatter attributes and HTML content
+ * Parse raw markdown content to extract frontmatter attributes and convert body to HTML.
+ * @param {string} raw - The raw markdown content with frontmatter.
+ * @returns {object} An object containing frontmatter attributes and HTML content.
  */
 function parseFrontmatter(raw) {
     const { attributes, body } = fm(raw)
@@ -15,43 +15,27 @@ function parseFrontmatter(raw) {
 }
 
 /**
- * Retrieves and groups all markdown pages by subdirectory
- * @returns {Promise<Array>} Array of objects with subdir and pages properties
+ * Get all pages grouped by their subdirectory.
+ * Each page includes its name (filename without extension) and frontmatter data.
+ * Returns an array of objects with 'subdir' and 'pages' properties.
+ * @returns {Array} An array of page groups by subdirectory.
  */
-export async function getAllPages() {
+export function getAllPages() {
     const grouped = {}
 
-    try {
-        // Iterate through all dynamically imported markdown modules
-        for (const [globPath, loader] of Object.entries(modules)) {
-            try {
-                // Load raw markdown content and parse frontmatter with body conversion to HTML
-                const raw = await loader()
-                const data = parseFrontmatter(raw)
-
-                // Extract subdirectory and filename from glob path
-                // Normalizes path by removing '../pages/' prefix and '.md' extension
-                // Example: '../pages/legal/privacy.md' -> relative: 'legal/privacy'
-                const relative = globPath.replace('../pages/', '').replace(/\.md$/, '')
-                const lastSlash = relative.lastIndexOf('/')
-
-                // Determine subdirectory and filename based on path structure
-                // If no slash exists, it's a root-level file (subdir: '', name: filename)
-                const subdir = lastSlash >= 0 ? relative.slice(0, lastSlash) : ''
-                const name = lastSlash >= 0 ? relative.slice(lastSlash + 1) : relative
-
-                // Initialize subdirectory group if not yet created, then add page data
-                if (!grouped[subdir]) grouped[subdir] = []
-                grouped[subdir].push({ name, ...data })
-            } catch (error) {
-                console.error(`Failed to process page: ${globPath}`, error)
-            }
+    for (const [globPath, raw] of Object.entries(modules)) {
+        try {
+            const data = parseFrontmatter(raw)
+            const relative = globPath.replace('../pages/', '').replace(/\.md$/, '')
+            const lastSlash = relative.lastIndexOf('/')
+            const subdir = lastSlash >= 0 ? relative.slice(0, lastSlash) : ''
+            const name = lastSlash >= 0 ? relative.slice(lastSlash + 1) : relative
+            if (!grouped[subdir]) grouped[subdir] = []
+            grouped[subdir].push({ name, ...data })
+        } catch (error) {
+            console.error(`Failed to process page: ${globPath}`, error)
         }
-
-        // Transform grouped object into array format with subdir and pages properties
-        return Object.entries(grouped).map(([subdir, pages]) => ({ subdir, pages }))
-    } catch (error) {
-        console.error('Failed to retrieve pages:', error)
-        return []
     }
+
+    return Object.entries(grouped).map(([subdir, pages]) => ({ subdir, pages }))
 }
