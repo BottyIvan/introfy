@@ -1,22 +1,35 @@
 <template>
-    <div v-if="downloadUrl">
+    <div v-if="downloadUrl" class="flex flex-col items-center gap-3">
         <a :href="downloadUrl" download
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-            Download {{ assetName }}
+            class="group inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white px-7 py-3.5 rounded-xl font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all duration-200">
+            <i class="bi bi-download text-lg group-hover:-translate-y-0.5 transition-transform duration-200"></i>
+            Download
+            <span class="text-blue-200/80 font-normal text-sm">{{ assetName }}</span>
+        </a>
+        <a :href="githubUrl" target="_blank" rel="noopener"
+            class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-300 transition-colors">
+            <i class="bi bi-github"></i>
+            View on GitHub
         </a>
     </div>
-    <div v-else class="animate-pulse flex flex-col gap-2">
-        <div class="h-10 w-48 bg-gray-300 rounded"></div>
-        <div class="h-4 w-24 bg-gray-200 rounded"></div>
+    <div v-else class="flex flex-col items-center gap-3 animate-pulse">
+        <div class="h-14 w-52 bg-gray-800 rounded-xl"></div>
+        <div class="h-4 w-28 bg-gray-800/60 rounded-full"></div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import introfyConfig from '../../introfy.config'
 
 const downloadUrl = ref(null)
 const assetName = ref('')
+
+const githubUrl = computed(() => {
+    const user = introfyConfig?.app?.github?.username
+    const repo = introfyConfig?.app?.github?.repository
+    return `https://github.com/${user}/${repo}`
+})
 
 const buildGithubApiUrl = (template) => {
     const user = introfyConfig?.app?.github?.username;
