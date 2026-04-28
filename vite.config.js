@@ -4,7 +4,6 @@ import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import vitePluginCopyMarkdownPages from './plugins/markdown-pages.js'
 // import introfyConfig from './introfy.config.js'
 
 // https://vite.dev/config/
@@ -18,10 +17,6 @@ export default defineConfig({
       exclude: [/\.md$/] // Exclude .md files from being processed by Vue
     }),
     vueDevTools(),
-    vitePluginCopyMarkdownPages({
-      sourceDirectory: 'src/pages',
-      destinationDirectory: 'dist/pages'
-    })
   ],
   resolve: {
     alias: {
