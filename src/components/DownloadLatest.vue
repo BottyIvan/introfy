@@ -13,13 +13,14 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import introfyConfig from '../../introfy.config'
 
 const downloadUrl = ref(null)
 const assetName = ref('')
 
 const buildGithubApiUrl = (template) => {
-    const user = import.meta.env.VITE_GITHUB_USERNAME;
-    const repo = import.meta.env.VITE_GITHUB_REPOSITORY;
+    const user = introfyConfig?.app?.github?.username;
+    const repo = introfyConfig?.app?.github?.repository;
 
     return template
         .replace('{user}', user)
