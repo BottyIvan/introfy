@@ -28,7 +28,12 @@ onMounted(async () => {
     pages.value = await getAllPages()
     appStore.$patch({
       releases: releasesData,
-      latestRelease: releasesData[0]
+      latestRelease: releasesData[0],
+      appInfo: {
+        name: introfyConfig?.app?.name,
+        description: introfyConfig?.app?.description,
+        github: introfyConfig?.app?.github
+      }
     })
   } catch (error) {
     console.error('Error loading data:', error)
