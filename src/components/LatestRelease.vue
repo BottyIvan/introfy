@@ -20,31 +20,14 @@ const isRecent = computed(() => {
 </script>
 
 <template>
-    <div v-if="release" class="w-full mx-auto px-4 py-16">
-        <div v-if="isRecent"
-            class="bg-white dark:bg-slate-800 border-blue-200 dark:border-slate-700 border rounded-2xl shadow-lg dark:shadow-slate-900/30 p-6 mb-6 text-left">
-            <h2 class="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400 flex items-center gap-2">
-                <span>✨</span> Latest Release: <span class="text-blue-700 dark:text-blue-300">{{ release.version
-                    }}</span>
-            </h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-2">Date: {{ release.date }}</p>
-            <ul class="list-disc list-inside space-y-1">
-                <li v-for="(change, index) in release.changes" :key="index" class="text-gray-700 dark:text-gray-300">
-                    {{ change }}
-                </li>
-            </ul>
-        </div>
-        <div v-else
-            class="bg-white dark:bg-slate-800 border-blue-200 dark:border-slate-700 border rounded-2xl shadow-lg dark:shadow-slate-900/30 p-6 mb-6 text-left">
-            <div class="animate-pulse space-y-4">
-                <div class="h-6 bg-gray-200 dark:bg-slate-700 rounded w-1/3 mb-2"></div>
-                <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-1/4 mb-2"></div>
-                <div class="space-y-2">
-                    <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4"></div>
-                    <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-2/3"></div>
-                    <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-1/2"></div>
-                </div>
-            </div>
-        </div>
+    <div v-if="release">
+        <span
+            class="inline-flex items-center gap-2 bg-blue-600/15 border border-blue-500/30 text-blue-300 text-sm font-medium px-4 py-1.5 rounded-full backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+            <span v-if="isRecent" class="text-blue-200">New release</span>
+            <span v-else class="text-blue-300/80">Latest</span>
+            <span class="text-blue-500/60">·</span>
+            <span class="font-mono text-blue-200">{{ release.version }}</span>
+        </span>
     </div>
 </template>
