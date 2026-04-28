@@ -16,13 +16,22 @@ const staticMenubar = computed(() => introfyConfig?.theme?.nav)
 
 const githubUsername = introfyConfig?.app?.files?.github?.username
 const route = useRoute()
-// On home: show anchor links + markdown page links
-// On other routes: show only markdown page links
+// On home: show anchor links + pages grouped (flat pages merged into a 'docs' dropdown)
+// On other routes: show markdown page links
 const currentMenubar = computed(() => {
+  const staticItems = staticMenubar.value ?? []
+  const allPages = pages.value
+
   if (route.name?.toLowerCase() === 'home') {
-    return [...(staticMenubar.value ?? []), ...pages.value]
+    // Flat pages (subdir='') get merged into a single 'docs' dropdown
+    const flatPages = allPages.find(g => g.subdir === '')?.pages ?? []
+    const otherGroups = allPages.filter(g => g.subdir !== '')
+    const docsGroup = flatPages.length
+      ? [{ subdir: 'docs', pages: flatPages, flat: true }]
+      : []
+    return [...staticItems, ...docsGroup, ...otherGroups]
   }
-  return pages.value
+  return allPages
 })
 
 onMounted(async () => {
