@@ -2,24 +2,6 @@ import Home from '@/components/Home.vue'
 import Markdown from '@/components/Markdown.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-// Import all .md pages as Vue components
-const pages = import.meta.glob('../pages/**/*.md')
-
-// Create routes for Markdown files
-const markdownRoutes = Object.keys(pages).map(path => {
-
-    // path example: '../pages/documentation.md'
-    const match = /\/pages\/(.*)\.md$/.exec(path)
-    const name = match ? match[1] : ''
-
-    return {
-        path: `/${name}`,
-        component: Markdown,
-        name: name || 'Markdown',
-        props: { file: `${name}.md` }
-    }
-})
-
 // Main routes
 const routes = [
     {
@@ -27,7 +9,16 @@ const routes = [
         component: Home,
         name: 'Home'
     },
-    ...markdownRoutes
+    {
+        path: '/:page+',
+        component: Markdown,
+        name: 'Markdown',
+        props: route => ({
+            file: (Array.isArray(route.params.page)
+                ? route.params.page.join('/')
+                : route.params.page) + '.md'
+        })
+    }
 ]
 
 const router = createRouter({
