@@ -1,20 +1,22 @@
 <template>
-    <div v-if="downloadUrl" class="flex flex-col items-center gap-3">
+    <div v-if="downloadUrl" class="flex flex-col items-center gap-4">
         <a :href="downloadUrl" download
-            class="group inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white px-7 py-3.5 rounded-xl font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all duration-200">
-            <i class="bi bi-download text-lg group-hover:-translate-y-0.5 transition-transform duration-200"></i>
-            Download
-            <span class="text-blue-200/80 font-normal text-sm">{{ assetName }}</span>
+            class="inline-flex items-center gap-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-7 py-3 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
+            <i class="bi bi-download text-base"></i>
+            <div class="flex flex-col items-start">
+                <span class="leading-tight">Download</span>
+                <div class="text-xs font-normal text-blue-100">{{ assetName }}</div>
+            </div>
         </a>
         <a :href="githubUrl" target="_blank" rel="noopener"
-            class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-300 transition-colors">
-            <i class="bi bi-github"></i>
-            View on GitHub
+            class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-200 transition-colors duration-150">
+            <i class="bi bi-github text-sm"></i>
+            <span>View on GitHub</span>
         </a>
     </div>
-    <div v-else class="flex flex-col items-center gap-3 animate-pulse">
-        <div class="h-14 w-52 bg-gray-800 rounded-xl"></div>
-        <div class="h-4 w-28 bg-gray-800/60 rounded-full"></div>
+    <div v-else class="flex flex-col items-center gap-4 animate-pulse">
+        <div class="h-12 w-40 bg-gradient-to-r from-gray-700/50 to-gray-600/50 rounded-lg"></div>
+        <div class="h-3 w-32 bg-gray-700/30 rounded-full"></div>
     </div>
 </template>
 
