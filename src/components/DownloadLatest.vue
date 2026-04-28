@@ -53,10 +53,16 @@ onMounted(async () => {
     const data = await response.json()
 
     // If you have multiple assets, you can filter the correct one, e.g., by OS.
-    // Here, we just take the first available asset
-    const asset = data.assets.find(a => /(\.AppImage|\.deb|\.exe|\.dmg|\.zip|\.tar\.gz)$/i.test(a.name));
+    // Here, we take the first available matching asset and fallback to zipball_url.
+    const asset = data.assets?.find(a => /(\.AppImage|\.deb|\.exe|\.dmg|\.zip|\.tar\.gz)$/i.test(a.name));
     if (!asset) {
-        console.error('No suitable asset found in the latest release.');
+        if (!data.zipball_url) {
+            console.error('No suitable asset or zipball URL found in the latest release.');
+            return;
+        }
+
+        downloadUrl.value = data.zipball_url
+        assetName.value = `${data.tag_name || 'latest'}-source.zip`
         return;
     }
 
