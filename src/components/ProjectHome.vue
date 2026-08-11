@@ -5,7 +5,7 @@ import DownloadLatest from './DownloadLatest.vue'
 import Features from './Features.vue'
 import MainFeatures from './MainFeatures.vue'
 import ReleaseList from './ReleaseList.vue'
-import introfyConfig from '../../introfy.config'
+import introfyConfig from '../../introfy.config.js'
 
 // Aggregate core application metadata from the configuration file
 const appInfo = {
