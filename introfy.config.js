@@ -19,6 +19,12 @@ export default {
         title: "Introfy",
         tagline: "You think about your project.\nWe think about the landing page."
     },
+    seo: {
+        title: APP_NAME,
+        description: APP_DESCRIPTION,
+        keywords: "landing page, open source, project showcase, changelog, contributors, templates, SEO, analytics",
+        image: "./screen.png"
+    },
     features: [
         {
             text: "Rapid generation of customized landing pages",

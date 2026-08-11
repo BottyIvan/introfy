@@ -1,4 +1,5 @@
 <script setup>
+import { useHead } from '@unhead/vue' // or your framework
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from './stores/appStore'
@@ -14,8 +15,10 @@ const pages = ref(getAllPages())
 // Use menubar from introfy config
 const staticMenubar = computed(() => introfyConfig?.theme?.nav)
 
-const githubUsername = introfyConfig?.app?.files?.github?.username
+// Fixed path to correctly access GitHub username from app config
+const githubUsername = introfyConfig?.app?.github?.username
 const route = useRoute()
+
 // On home: show anchor links + pages grouped (flat pages merged into a 'docs' dropdown)
 // On other routes: show markdown page links
 const currentMenubar = computed(() => {
@@ -34,6 +37,7 @@ const currentMenubar = computed(() => {
   return allPages
 })
 
+// Fetch release data on component mount and update the store
 onMounted(async () => {
   try {
     const releasesResponse = await fetch(introfyConfig?.app?.files?.releases)
@@ -70,6 +74,40 @@ function getRouteProps(Component) {
   // For all other routes/components, provide the dynamic menubar as a prop
   return { menubar: pages.value }
 }
+
+// Setup reactive SEO head tags using Unhead with computed properties
+useHead({
+  title: computed(() => introfyConfig?.seo?.title || 'Introfy'),
+  meta: [
+    { 
+      name: 'description', 
+      content: computed(() => introfyConfig?.seo?.description || 'Page description') 
+    },
+    { 
+      name: 'keywords', 
+      content: introfyConfig?.seo?.keywords || '' 
+    },
+    { 
+      property: 'og:title', 
+      content: computed(() => introfyConfig?.seo?.title || 'Introfy') 
+    },
+    { 
+      property: 'og:description', 
+      content: computed(() => introfyConfig?.seo?.description || 'Page description') 
+    },
+    { 
+      property: 'og:image', 
+      content: computed(() => introfyConfig?.seo?.image || '') 
+    }
+  ],
+  link: [
+    { 
+      rel: 'icon', 
+      href: introfyConfig?.theme?.logo || '' 
+    }
+  ]
+})
+
 </script>
 
 <template>
