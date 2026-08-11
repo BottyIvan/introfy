@@ -67,7 +67,9 @@ function getRouteProps(Component) {
   if (isHome) {
     return {
       latestRelease: appStore.latestRelease,
-      releases: appStore.releases
+      releases: appStore.releases,
+      // Pass mode config down to the Home component if needed for layout switching
+      mode: introfyConfig?.mode || 'project'
     }
   }
 
